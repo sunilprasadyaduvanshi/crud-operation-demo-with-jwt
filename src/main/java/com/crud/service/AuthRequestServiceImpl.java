@@ -2,7 +2,6 @@ package com.crud.service;
 
 import com.crud.entity.AuthRequest;
 import com.crud.repo.AuthRequestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service

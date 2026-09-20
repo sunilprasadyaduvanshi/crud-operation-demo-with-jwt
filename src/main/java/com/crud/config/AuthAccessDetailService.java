@@ -1,9 +1,7 @@
 package com.crud.config;
 
 import com.crud.entity.AuthRequest;
-import com.crud.entity.Employee;
 import com.crud.repo.AuthRequestRepository;
-import com.crud.repo.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

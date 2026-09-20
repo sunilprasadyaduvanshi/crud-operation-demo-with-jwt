@@ -1,7 +1,6 @@
 package com.crud.config;
 
 import com.crud.entity.AuthRequest;
-import com.crud.entity.Employee;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
