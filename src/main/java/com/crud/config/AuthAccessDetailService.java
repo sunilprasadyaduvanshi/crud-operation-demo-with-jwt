@@ -1,6 +1,8 @@
 package com.crud.config;
 
+import com.crud.entity.AuthRequest;
 import com.crud.entity.Employee;
+import com.crud.repo.AuthRequestRepository;
 import com.crud.repo.EmployeeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,18 +14,18 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class EmployeeInfoDetailService implements UserDetailsService {
+public class AuthAccessDetailService implements UserDetailsService {
 
-    private final EmployeeRepository employeeRepository;
+    private final AuthRequestRepository employeeRepository;
 
-    public EmployeeInfoDetailService(EmployeeRepository employeeRepository) {
+    public AuthAccessDetailService(AuthRequestRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        log.info("START :: EmployeeInfoDetailService --> loadUserByUsername");
-        Optional<Employee> employeeInfo = employeeRepository.findByName(username);
+        log.info("START :: AuthAccessDetailService --> loadUserByUsername");
+        Optional<AuthRequest> employeeInfo = employeeRepository.findByName(username);
         return employeeInfo.map(UserInfoUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found " + username));
     }

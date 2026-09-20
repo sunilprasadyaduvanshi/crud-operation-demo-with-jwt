@@ -21,17 +21,18 @@ import java.util.List;
 @RequestMapping("/api/employees")
 public class EmployeeController {
     private final EmployeeService employeeService;
-    private final AuthenticationManager authenticationManager;
-    private final JwtService jwtService;
 
-    public EmployeeController(EmployeeService employeeService, AuthenticationManager authenticationManager, JwtService jwtService) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.authenticationManager = authenticationManager;
-        this.jwtService = jwtService;
     }
+//    private final AuthenticationManager authenticationManager;
+//    private final JwtService jwtService;
+
+
 
 
     @PostMapping("/new")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) {
         log.info("Received request to create employee: {}", employee);
         Employee createdEmployee = employeeService.createEmployee(employee);
@@ -66,15 +67,4 @@ public class EmployeeController {
         }
     }
 
-    @PostMapping("/authenticate")
-    public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-        if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequest.getUsername());
-        } else {
-            throw new UsernameNotFoundException("invalid user request !");
-        }
-
-
-    }
 }

@@ -1,5 +1,6 @@
 package com.crud.config;
 
+import com.crud.entity.AuthRequest;
 import com.crud.entity.Employee;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,12 +17,12 @@ public class UserInfoUserDetails implements UserDetails {
     private final String password;
     private final List<GrantedAuthority> authorities;
 
-    public UserInfoUserDetails(Employee employee) {
-        this.name = employee.getName();
-        this.password = employee.getPassword();
-        this.authorities = employee.getRoles() == null || employee.getRoles().isBlank()
+    public UserInfoUserDetails(AuthRequest auth) {
+        this.name = auth.getName();
+        this.password = auth.getPassword();
+        this.authorities = auth.getRoles() == null || auth.getRoles().isBlank()
                 ? List.of()
-                : Arrays.stream(employee.getRoles().split(","))
+                : Arrays.stream(auth.getRoles().split(","))
                     .map(String::trim)
                     .filter(role -> !role.isEmpty())
                     .map(SimpleGrantedAuthority::new)

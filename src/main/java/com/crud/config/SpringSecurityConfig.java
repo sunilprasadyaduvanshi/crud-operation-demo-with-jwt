@@ -36,7 +36,7 @@ public class SpringSecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/employees/new","/api/employees/authenticate")
+                        .requestMatchers("/api/access/register", "/api/access/authenticate")
                         .permitAll()
                         .requestMatchers("/api/employees/**").authenticated()
                         .anyRequest().authenticated())
@@ -53,9 +53,9 @@ public class SpringSecurityConfig {
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(EmployeeInfoDetailService employeeInfoDetailService) {
+    public AuthenticationProvider authenticationProvider(AuthAccessDetailService authAccessDetailService) {
         log.info("START:: SecurityConfig --> authenticationProvider()");
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(employeeInfoDetailService);
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider(authAccessDetailService);
         daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
         return daoAuthenticationProvider;
     }
